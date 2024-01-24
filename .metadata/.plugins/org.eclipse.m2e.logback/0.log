@@ -1,0 +1,6 @@
+2024-01-24 22:49:00,842 [Worker-5: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2024-01-24 22:56:41,978 [Worker-24: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.project:eadproject:1.0-SNAPSHOT @ /home/firaol/git/EADproject/pom.xml.
+2024-01-24 22:56:43,568 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /home/firaol/git/EADproject/src/main/resources
+2024-01-24 22:56:43,577 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /home/firaol/git/EADproject/src/test/resources
+2024-01-24 23:27:56,077 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /home/firaol/git/EADproject/src/main/resources
+2024-01-24 23:27:56,082 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /home/firaol/git/EADproject/src/test/resources
