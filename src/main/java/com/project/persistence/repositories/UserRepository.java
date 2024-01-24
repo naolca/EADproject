@@ -16,11 +16,11 @@ public class UserRepository {
   }
 
   public void saveUser(User user) {
-    String query = "INSERT INTO users (first_name, last_name, email, password, role) VALUES (?, ?, ?, ?, ?)";
+    String query = "INSERT INTO users (firstName, lastName, email, password, role) VALUES (?, ?, ?, ?, ?)";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-      preparedStatement.setString(1, user.first_name);
-      preparedStatement.setString(2, user.last_name);
+      preparedStatement.setString(1, user.firstName);
+      preparedStatement.setString(2, user.lastName);
       preparedStatement.setString(3, user.email);
       preparedStatement.setString(4, user.password);
       preparedStatement.setString(5, user.role);
@@ -48,8 +48,8 @@ public class UserRepository {
       if (resultSet.next()) {
         return new User(
             resultSet.getInt("id"),
-            resultSet.getString("first_name"),
-            resultSet.getString("last_name"),
+            resultSet.getString("firstName"),
+            resultSet.getString("lastName"),
             resultSet.getString("email"),
             resultSet.getString("password"),
             resultSet.getString("role")
@@ -63,11 +63,11 @@ public class UserRepository {
   }
 
   public void updateUser(User user) {
-    String query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, role = ?,  WHERE id = ?";
+    String query = "UPDATE users SET firstName = ?, lastName = ?, email = ?, password = ?, role = ?,  WHERE id = ?";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setString(1, user.first_name);
-      preparedStatement.setString(2, user.last_name);
+      preparedStatement.setString(1, user.firstName);
+      preparedStatement.setString(2, user.lastName);
       preparedStatement.setString(3, user.email);
       preparedStatement.setString(4, user.password);
       preparedStatement.setString(5, user.role);
