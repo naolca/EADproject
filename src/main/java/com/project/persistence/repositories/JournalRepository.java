@@ -110,4 +110,29 @@ public class JournalRepository {
             e.printStackTrace(); // Handle the exception according to your application's needs
         }
     }
+    
+    public List<Journal> searchJournalsByTitle(String title) {
+        String query = "SELECT * FROM journals WHERE title LIKE ?";
+        List<Journal> journals = new ArrayList<>();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, "%" + title + "%");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                journals.add(new Journal(
+                        resultSet.getInt("id"),
+                        resultSet.getString("title"),
+                        resultSet.getString("content"),
+                        resultSet.getInt("user_id")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception according to your application's needs
+        }
+
+        return journals;
+    }
+
 }
