@@ -16,11 +16,14 @@ public class UserRepository {
   }
 
   public void saveUser(User user) {
-    String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+    String query = "INSERT INTO users (first_name, last_name, email, password, role) VALUES (?, ?, ?, ?, ?)";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-      preparedStatement.setString(1, user.username);
-      preparedStatement.setString(2, user.password);
+      preparedStatement.setString(1, user.first_name);
+      preparedStatement.setString(2, user.last_name);
+      preparedStatement.setString(3, user.email);
+      preparedStatement.setString(4, user.password);
+      preparedStatement.setString(5, user.role);
 
       preparedStatement.executeUpdate();
 
@@ -45,8 +48,12 @@ public class UserRepository {
       if (resultSet.next()) {
         return new User(
             resultSet.getInt("id"),
-            resultSet.getString("username"),
-            resultSet.getString("password"));
+            resultSet.getString("first_name"),
+            resultSet.getString("last_name"),
+            resultSet.getString("email"),
+            resultSet.getString("password"),
+            resultSet.getString("role")
+            );
       }
     } catch (SQLException e) {
       e.printStackTrace(); // Handle the exception according to your application's needs
@@ -56,12 +63,15 @@ public class UserRepository {
   }
 
   public void updateUser(User user) {
-    String query = "UPDATE users SET username = ?, password = ? WHERE id = ?";
+    String query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, role = ?,  WHERE id = ?";
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setString(1, user.username);
-      preparedStatement.setString(2, user.password);
-      preparedStatement.setInt(3, user.id);
+      preparedStatement.setString(1, user.first_name);
+      preparedStatement.setString(2, user.last_name);
+      preparedStatement.setString(3, user.email);
+      preparedStatement.setString(4, user.password);
+      preparedStatement.setString(5, user.role);
+      preparedStatement.setInt(6, user.id);
 
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
