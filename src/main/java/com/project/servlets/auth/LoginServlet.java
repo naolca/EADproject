@@ -61,8 +61,4 @@ public class LoginServlet extends HttpServlet {
       dispatcher.forward(req, res);
     }
   }
-
-  public UserRepository getUserRepository() {
-    return userRepository;
-  }
 }

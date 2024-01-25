@@ -32,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
   }
 
   public void doGet(final HttpServletRequest req, final HttpServletResponse res) throws ServletException, IOException {
-    final RequestDispatcher rd = req.getRequestDispatcher("/auth/login.jsp");
+    final RequestDispatcher rd = req.getRequestDispatcher("/auth/register.jsp");
     rd.forward(req, res);
   }
 
@@ -67,9 +67,4 @@ public class RegisterServlet extends HttpServlet {
       dispatcher.forward(req, res);
     }
   }
-
-  public UserRepository getUserRepository() {
-    return userRepository;
-  }
-
 }
