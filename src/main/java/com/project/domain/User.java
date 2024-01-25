@@ -27,4 +27,8 @@ public class User {
 		this.password = password;
 		this.role = role;
 	}
+  public User(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
 }
