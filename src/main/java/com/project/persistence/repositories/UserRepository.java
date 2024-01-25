@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.project.domain.User;
+import com.project.customexceptions.*;
 
 public class UserRepository {
   private final Connection connection;
@@ -15,10 +16,14 @@ public class UserRepository {
     this.connection = connection;
   }
 
-  public void saveUser(User user) {
-    String query = "INSERT INTO users (firstName, lastName, email, password, role) VALUES (?, ?, ?, ?, ?)";
+  public User saveUser(User user) throws SQLException, EmailExistsException {
+    try {
+      if (getUserByEmail(user.email) != null) {
+        throw new EmailExistsException("Email is taken by another user.");
+      }
 
-    try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+      String query = "INSERT INTO users (firstName, lastName, email, password, role) VALUES (?, ?, ?, ?, ?)";
+      PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
       preparedStatement.setString(1, user.firstName);
       preparedStatement.setString(2, user.lastName);
       preparedStatement.setString(3, user.email);
@@ -32,62 +37,106 @@ public class UserRepository {
       if (generatedKeys.next()) {
         user.id = generatedKeys.getInt(1);
       }
+      return user;
     } catch (SQLException e) {
       e.printStackTrace(); // Handle the exception according to your application's needs
+      return null;
     }
   }
 
-  public User getUserById(int userId) {
+  public User getUserById(int userId) throws SQLException {
     String query = "SELECT * FROM users WHERE id = ?";
 
-    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setInt(1, userId);
+    PreparedStatement preparedStatement = connection.prepareStatement(query);
+    preparedStatement.setInt(1, userId);
 
-      ResultSet resultSet = preparedStatement.executeQuery();
+    ResultSet resultSet = preparedStatement.executeQuery();
 
-      if (resultSet.next()) {
-        return new User(
-            resultSet.getInt("id"),
-            resultSet.getString("firstName"),
-            resultSet.getString("lastName"),
-            resultSet.getString("email"),
-            resultSet.getString("password"),
-            resultSet.getString("role")
-            );
-      }
-    } catch (SQLException e) {
-      e.printStackTrace(); // Handle the exception according to your application's needs
+    if (resultSet.next()) {
+      return new User(
+          resultSet.getInt("id"),
+          resultSet.getString("firstName"),
+          resultSet.getString("lastName"),
+          resultSet.getString("email"),
+          resultSet.getString("password"),
+          resultSet.getString("role"));
     }
 
     return null;
   }
 
-  public void updateUser(User user) {
+  public void updateUser(User user) throws SQLException {
     String query = "UPDATE users SET firstName = ?, lastName = ?, email = ?, password = ?, role = ?,  WHERE id = ?";
 
-    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setString(1, user.firstName);
-      preparedStatement.setString(2, user.lastName);
-      preparedStatement.setString(3, user.email);
-      preparedStatement.setString(4, user.password);
-      preparedStatement.setString(5, user.role);
-      preparedStatement.setInt(6, user.id);
+    PreparedStatement preparedStatement = connection.prepareStatement(query);
+    preparedStatement.setString(1, user.firstName);
+    preparedStatement.setString(2, user.lastName);
+    preparedStatement.setString(3, user.email);
+    preparedStatement.setString(4, user.password);
+    preparedStatement.setString(5, user.role);
+    preparedStatement.setInt(6, user.id);
 
-      preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace(); // Handle the exception according to your application's needs
-    }
+    preparedStatement.executeUpdate();
   }
 
-  public void deleteUser(int userId) {
+  public void deleteUser(int userId) throws SQLException, NotFoundException {
+    if (getUserById(userId) == null)
+      throw new NotFoundException("User with that id was not found.");
+
     String query = "DELETE FROM users WHERE id = ?";
+    PreparedStatement preparedStatement = connection.prepareStatement(query);
+    preparedStatement.setInt(1, userId);
 
-    try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-      preparedStatement.setInt(1, userId);
+    preparedStatement.executeUpdate();
+  }
 
-      preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-      e.printStackTrace(); // Handle the exception according to your application's needs
+  // Check user existence and password
+  public User getUserByEmailAndPassword(String email, String password) throws SQLException, NotFoundException {
+    if (getUserByEmail(email) == null) {
+      throw new NotFoundException("User with email was not found.");
     }
+
+    String query = "SELECT * FROM admins WHERE email = ? AND password = ?";
+
+    PreparedStatement preparedStatement = connection.prepareStatement(query);
+    preparedStatement.setString(1, email);
+    preparedStatement.setString(2, password);
+
+    System.out.println(preparedStatement);
+
+    ResultSet resultSet = preparedStatement.executeQuery();
+    System.out.println(resultSet);
+    if (resultSet.next()) {
+      return new User(
+          resultSet.getInt("id"),
+          resultSet.getString("firstName"),
+          resultSet.getString("lastName"),
+          resultSet.getString("email"),
+          resultSet.getString("password"),
+          resultSet.getString("role"));
+    }
+    return null;
+  }
+
+  // Check if email exists
+  private User getUserByEmail(String userEmail) throws SQLException {
+    String query = "SELECT * FROM users WHERE email = ?";
+
+    PreparedStatement preparedStatement = connection.prepareStatement(query);
+    preparedStatement.setString(1, userEmail);
+
+    ResultSet resultSet = preparedStatement.executeQuery();
+
+    if (resultSet.next()) {
+      return new User(
+          resultSet.getInt("id"),
+          resultSet.getString("firstName"),
+          resultSet.getString("lastName"),
+          resultSet.getString("email"),
+          resultSet.getString("password"),
+          resultSet.getString("role"));
+    }
+
+    return null;
   }
 }
