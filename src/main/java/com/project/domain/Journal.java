@@ -6,7 +6,7 @@ public class Journal {
   public String content;
   public int userId;
 
-  public Journal(String title, String content) {
+  public Journal(String title, String content, int userId) {
     this.title = title;
     this.content = content;
   }
