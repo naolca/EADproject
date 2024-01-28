@@ -37,9 +37,13 @@
 </body>
 <script>
     function deleteJournal(id) {
+        if (!confirm("Are you sure you want to delete this journal?")) {
+            return;
+        }
         fetch(`/journal?id=${id}`, {
             method: 'DELETE'
         }).then(res => {
+            console.log(res);
         })
     }
 </script>
