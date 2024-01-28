@@ -45,10 +45,9 @@ public class LoginServlet extends HttpServlet {
       User user = userRepository.getUserByEmailAndPassword(email, password);
       if (user != null) {
         HttpSession session = req.getSession();
-        session.setAttribute("email", user.email);
-        session.setAttribute("role", user.role);
+        session.setAttribute("user", user);
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/users");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/user/profile.jsp");
         dispatcher.forward(req, res);
       }
     } catch (SQLException e) {
