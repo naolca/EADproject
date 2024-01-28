@@ -42,9 +42,7 @@ public class LoginServlet extends HttpServlet {
     String password = req.getParameter("password");
 
     try {
-      System.out.println(" here");
       User user = userRepository.getUserByEmailAndPassword(email, password);
-      System.out.println(user.toString());
       if (user != null) {
         HttpSession session = req.getSession();
         session.setAttribute("email", user.email);
