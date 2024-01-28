@@ -21,7 +21,7 @@
                             type="text"
                             name="title"
                             placeholder="Enter the title of the Journal"
-                            defaultValue=""
+                            defaultValue=<%= journal.title %>
                     />
                 </div>
 
@@ -30,7 +30,7 @@
                             class="flex p-2 m-2 text-2xl focus:border-none h-full w-full"
                             name="content"
                             placeholder="Journal content.."></textarea>
-                            defaultValue=""
+                            defaultValue=<%= journal.content %>
                 </div>
 
                 <div class="flex justify-center gap-x-4 bg-black text-white w-16 text-center p-1">
