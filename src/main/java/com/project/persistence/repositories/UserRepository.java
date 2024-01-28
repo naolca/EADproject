@@ -96,7 +96,7 @@ public class UserRepository {
       throw new NotFoundException("User with email was not found.");
     }
 
-    String query = "SELECT * FROM admins WHERE email = ? AND password = ?";
+    String query = "SELECT * FROM users WHERE email = ? AND password = ?";
 
     PreparedStatement preparedStatement = connection.prepareStatement(query);
     preparedStatement.setString(1, email);
