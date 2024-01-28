@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.project.domain.User;
 import com.project.customexceptions.*;
@@ -65,19 +67,59 @@ public class UserRepository {
     return null;
   }
 
-  public void updateUser(User user) throws SQLException {
-    String query = "UPDATE users SET firstName = ?, lastName = ?, email = ?, password = ?, role = ?,  WHERE id = ?";
 
-    PreparedStatement preparedStatement = connection.prepareStatement(query);
-    preparedStatement.setString(1, user.firstName);
-    preparedStatement.setString(2, user.lastName);
-    preparedStatement.setString(3, user.email);
-    preparedStatement.setString(4, user.password);
-    preparedStatement.setString(5, user.role);
-    preparedStatement.setInt(6, user.id);
 
-    preparedStatement.executeUpdate();
-  }
+
+      public List<User> getAllUsers() throws SQLException {
+          List<User> users = new ArrayList<>();
+
+          String query = "SELECT * FROM users";
+          PreparedStatement preparedStatement = connection.prepareStatement(query);
+          ResultSet resultSet = preparedStatement.executeQuery();
+
+          while (resultSet.next()) {
+              users.add(new User(
+                  resultSet.getInt("id"),
+                  resultSet.getString("firstName"),
+                  resultSet.getString("lastName"),
+                  resultSet.getString("email"),
+                  resultSet.getString("password"),
+                  resultSet.getString("role")
+              ));
+          }
+
+          return users;
+      }
+
+
+
+
+
+      public User updateUser(User user) throws SQLException {
+
+        try{
+        String query = "UPDATE users SET firstName = ?, lastName = ?, email = ?, password = ?, role = ? WHERE id = ?";
+    
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, user.firstName);
+        preparedStatement.setString(2, user.lastName);
+        preparedStatement.setString(3, user.email);
+        preparedStatement.setString(4, user.password);
+        preparedStatement.setString(5, user.role);
+        preparedStatement.setInt(6, user.id);
+    
+        preparedStatement.executeUpdate();
+        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+          if (generatedKeys.next()) {
+            user.id = generatedKeys.getInt(1);
+          }
+        return user;
+        } catch (SQLException e) {
+          e.printStackTrace(); // Handle the exception according to your application's needs
+          return null;
+        }
+        
+    }
 
   public void deleteUser(int userId) throws SQLException, NotFoundException {
     if (getUserById(userId) == null)
