@@ -10,7 +10,7 @@
 
 <body class="w-full h-100vh text-gray-900">
   <jsp:include page="../bg.jsp" />
-  <main class="w-full h-full lg:flex">
+  <main class="w-full h-full lg:flex z-999">
     <div class=" w-full h-full flex flex-col">
       <div class="w-full flex flex-col justify-center items-center">
         <h2 class="text-4xl font-bold text-gray-900">Welcome back!</h2>
@@ -42,7 +42,6 @@
             class="underline decoration-indigo-700 text-indigo-600">Register!</a> </p>
       </div>
     </div>
-    <div class="bg-red w-full h-full font-bold">Hello, world</div>
   </main>
 </body>
 
