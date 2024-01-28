@@ -7,7 +7,7 @@
 <body>
     <div class="flex flex-col w-full justify-between h-screen">
      <jsp:include page="header.jsp" />
-    <div class="flex justify-between  gap-x-4">
+    <div class="flex justify-between min-h-screen items-center mx-auto  gap-x-4">
         <div class="flex flex-col justify-between gap-y-18 flex-1 ">
             <form action="<%= request.getContextPath() %>/journal" method="post">
                 <div class="border-l-2 border-l-black">
@@ -26,7 +26,7 @@
                         placeholder="Journal content.."></textarea>
                 </div>
 
-                <div class="flex justify-center gap-x-4 bg-black text-white w-16 text-center p-1">
+                <div class="flex justify-end gap-x-4 bg-black text-white w-16 text-center p-1 m-2">
                     <input  type="submit" value="Submit">
                 </div>
             </form>
