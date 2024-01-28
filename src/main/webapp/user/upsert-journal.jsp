@@ -5,11 +5,13 @@
 </head>
 
 <body>
-    <div class="flex flex-col w-full justify-between h-screen">
+    <div class="flex flex-col w-full justify-between h-screen bg-blue-50">
      <jsp:include page="header.jsp" />
-    <div class="flex justify-between min-h-screen items-center mx-auto  gap-x-4">
+    <div class="flex justify-between min-h-screen items-center  min-w-screen mx-16  gap-x-4">
         <div class="flex flex-col justify-between gap-y-18 flex-1 ">
-            <form action="<%= request.getContextPath() %>/journal" method="post">
+            <form
+                class=""
+             action="<%= request.getContextPath() %>/journal" method="post">
                 <div class="border-l-2 border-l-black">
                     <input
                         class="flex  p-2 m-2 text-2xl focus:border-none"
