@@ -53,7 +53,6 @@
         <p> Already have an account? <a href="/auth/login" class="underline decoration-sky-500">Log In!</a> </p>
       </div>
     </div>
-    <div class="bg-red w-full h-full font-bold">Hello, world</div>
   </main>
 </body>
 
