@@ -18,7 +18,7 @@ public class JournalRepository {
     }
 
     public void saveJournal(Journal journal) {
-        String query = "INSERT INTO journals (title, content, user_id) VALUES (?, ?, ?)";
+        String query = "INSERT INTO journals (title, content, userId) VALUES (?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, journal.title);
@@ -50,7 +50,7 @@ public class JournalRepository {
                         resultSet.getInt("id"),
                         resultSet.getString("title"),
                         resultSet.getString("content"),
-                        resultSet.getInt("user_id")
+                        resultSet.getInt("userId")
                 );
             }
         } catch (SQLException e) {
@@ -61,7 +61,7 @@ public class JournalRepository {
     }
 
     public List<Journal> getJournalsByUserId(int userId) {
-        String query = "SELECT * FROM journals WHERE user_id = ?";
+        String query = "SELECT * FROM journals WHERE userId = ?";
         List<Journal> journals = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -74,7 +74,7 @@ public class JournalRepository {
                         resultSet.getInt("id"),
                         resultSet.getString("title"),
                         resultSet.getString("content"),
-                        resultSet.getInt("user_id")
+                        resultSet.getInt("userId")
                 ));
             }
         } catch (SQLException e) {
@@ -85,7 +85,7 @@ public class JournalRepository {
     }
 
     public void updateJournal(Journal journal) {
-        String query = "UPDATE journals SET title = ?, content = ?, user_id = ? WHERE id = ?";
+        String query = "UPDATE journals SET title = ?, content = ?, userId = ? WHERE id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, journal.title);
@@ -125,7 +125,7 @@ public class JournalRepository {
                         resultSet.getInt("id"),
                         resultSet.getString("title"),
                         resultSet.getString("content"),
-                        resultSet.getInt("user_id")
+                        resultSet.getInt("userId")
                 ));
             }
         } catch (SQLException e) {
