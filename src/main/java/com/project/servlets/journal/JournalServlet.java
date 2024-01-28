@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.project.domain.Journal;
 import com.project.persistence.repositories.UnitOfWork;
 import com.project.persistence.repositories.JournalRepository;
+import com.project.domain.User;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/journal")
 public class JournalServlet extends HttpServlet {
@@ -53,7 +55,9 @@ public class JournalServlet extends HttpServlet {
 
             System.out.println("title: " + title);
 
-            int userId = Integer.parseInt(req.getParameter("userId"));
+            HttpSession session = req.getSession();
+            User user = (User) session.getAttribute("user");
+            int userId = user.id;
             Journal journal = new Journal(title, content, userId);
             journalRepository.saveJournal(journal);
             resp.sendRedirect("/journal?id=" + journal.id);
@@ -69,7 +73,9 @@ public class JournalServlet extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("id"));
             String title = req.getParameter("title");
             String content = req.getParameter("content");
-            int userId = Integer.parseInt(req.getParameter("userId"));
+            HttpSession session = req.getSession();
+            User user = (User) session.getAttribute("user");
+            int userId = user.id;
             Journal journal = new Journal(id, title, content, userId);
             journalRepository.updateJournal(journal);
             resp.sendRedirect("/journal?id=" + journal.id);
