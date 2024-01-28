@@ -5,8 +5,10 @@
 </head>
 
 <body>
-    <div class="flex justify-between  gap-x-4 m-20 w-screen">
-        <div class="flex flex-col justify-between gap-y-18 flex-1 p-32">
+    <div class="flex flex-col w-full justify-between h-screen">
+     <jsp:include page="header.jsp" />
+    <div class="flex justify-between  gap-x-4">
+        <div class="flex flex-col justify-between gap-y-18 flex-1 ">
             <form action="<%= request.getContextPath() %>/journal" method="post">
                 <div class="border-l-2 border-l-black">
                     <input
@@ -30,4 +32,6 @@
             </form>
         </div>
     </div>
+    <jsp:include page="footer.jsp" />
+</div>
 </body>
