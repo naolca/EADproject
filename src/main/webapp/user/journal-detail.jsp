@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-sans">
+<%@include file="./header.jsp" %>
 <div class="flex justify-center h-screen p-20">
     <div class="bg-white px-20 w-full">
         <h1 class="text-2xl font-bold mb-6">Journal Detail</h1>
@@ -25,7 +26,7 @@
             </div>
         </div>
         <div class="mt-4">
-            <a href="<%= request.getContextPath() %>/user/journals.jsp" class="text-blue-500 hover:underline">Back to Journal Listing</a>
+            <a href="<%= request.getContextPath() %>/user/journals.jsp" class="text-blue-500 hover:underline">Back to Journals</a>
         </div>
     </div>
 </div>

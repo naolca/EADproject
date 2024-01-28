@@ -1,67 +1,51 @@
-<%@ page import="com.project.domain.User" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://src/main/java/com/project/domain/User.javacdn.tailwindcss.com"></script>
+    <title>Edit Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body>
-    <jsp:include page="header.jsp" />
-
-    <%
-        User user = (User) session.getAttribute("user");
-    %>
-
-    <div>
-        <div class="flex flex-col justify-between gap-y-18 flex-1 ">
-            <form action="<%= request.getContextPath() %>/journal" method="post">
-                <div class="border-l-2 border-l-black">
-                    <input
-                        class="flex  p-2 m-2 text-2xl focus:border-none"
+<body class="font-sans">
+<%@include file="./header.jsp" %>
+<div class="flex justify-center h-screen p-20">
+    <div class="bg-white px-20 w-full">
+        <h1 class="text-2xl font-bold mb-6">Edit Profile</h1>
+        <form action="<%= request.getContextPath() %>/update-profile" method="post">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Full Name:</label>
+                <input
                         type="text"
-                        name="firstName"
-                        value="<%= user.firstName %>"
-                        placeholder="First Name"
-                    />
-                </div>
+                        id="name"
+                        name="username"
+                        class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
+                        value="John Doe" required
+                />
+            </div>
 
-                <div class="border-l-2 border-l-black">
-                    <input
-                        class="flex  p-2 m-2 text-2xl focus:border-none"
-                        type="text"
-                        name="lastName"
-                        value="<%= user.lastName %>"
-                        placeholder="Last Name"
-                    />
-                </div>
-
-                <div class="border-l-2 border-l-black">
-                    <input
-                        class="flex  p-2 m-2 text-2xl focus:border-none"
-                        type="text"
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                <input
+                        type="email"
+                        id="email"
                         name="email"
-                        value="<%= user.email %>"
-                        placeholder="Email"
-                    />
-                </div>
+                        class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
+                        value="user@example.com" required
+                />
+            </div>
 
-                <div class="border-l-2 border-l-black">
-                    <input
-                        class="flex  p-2 m-2 text-2xl focus:border-none"
-                        type="password"
-                        name="password"
-                        value="<%= user.password %>"
-                        placeholder="Password"
-                    />
-                </div>
-
-                <div class="flex justify-center gap-x-4 bg-black text-white w-16 text-center p-1">
-                    <input  type="submit" value="Submit">
-                </div>
-            </form>
-        </div>
+            <div class="flex justify-center">
+                <button
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit"
+                >
+                    Save Changes
+                </button>
+            </div>
+        </form>
     </div>
-
-    <jsp:include page="footer.jsp" />
+</div>
 </body>
+</html>
