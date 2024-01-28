@@ -46,9 +46,13 @@ public class JournalServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            
+            System.out.println("POST called");
+            System.out.println("title: " + req.getParameter("title"));
             String title = req.getParameter("title");
             String content = req.getParameter("content");
+
+            System.out.println("title: " + title);
+
             int userId = Integer.parseInt(req.getParameter("userId"));
             Journal journal = new Journal(title, content, userId);
             journalRepository.saveJournal(journal);
