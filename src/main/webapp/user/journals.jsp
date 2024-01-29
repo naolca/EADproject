@@ -1,6 +1,9 @@
 <%@ page import="com.project.domain.Journal" %>
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ page import="com.project.domain.User" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +14,20 @@
 </head>
 
 <body class="font-sans overflow-x-clip">
+
+
+    <% User user=(User) session.getAttribute("user");
+      
+         %>
 <%@include file="./header.jsp" %>
-<div class="flex justify-center h-screen px-20 py-8">
+<div class="flex flex-col justify-between h-screen px-20 py-8">
     <div class="bg-white text-center">
         <h1 class="text-3xl font-bold mb-10">Journals</h1>
+        <a href="user/upsert-journal.jsp" onclick="">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                + Create New Journal
+              </button>
+        </a>
         <div class="flex pb-10 flex-wrap items-center justify-center gap-4">
             <%
                 List<Journal> journalEntries = (List<Journal>) request.getAttribute("journals");
@@ -31,6 +44,7 @@
             %>
         </div>
     </div>
+  
 </div>
 </body>
 </html>

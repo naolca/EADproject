@@ -54,6 +54,7 @@ public class JournalServlet extends HttpServlet {
             System.out.println("title: " + title);
 
             int userId = Integer.parseInt(req.getParameter("userId"));
+
             Journal journal = new Journal(title, content, userId);
             journalRepository.saveJournal(journal);
             // resp.sendRedirect("/journal?id=" + journal.id);
