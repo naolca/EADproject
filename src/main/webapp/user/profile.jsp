@@ -12,9 +12,10 @@
     <% User user=(User) session.getAttribute("user"); %>
 
       <div>
-        <div class="flex flex-col justify-between gap-y-18 flex-1 ">
+        <div class="flex flex-col justify-between gap-y-18 flex-1 min-h-screen p-10 ">
           <form action="<%= request.getContextPath() %>/journal" method="post">
             <div class="border-l-2 border-l-black">
+        
               <input class="flex  p-2 m-2 text-2xl focus:border-none" type="text" name="firstName"
                 value="<%= user.firstName %>" placeholder="First Name" />
             </div>
@@ -33,6 +34,8 @@
               <input class="flex  p-2 m-2 text-2xl focus:border-none" type="password" name="password"
                 value="<%= user.password %>" placeholder="Password" />
             </div>
+
+            
 
             <div class="flex justify-center gap-x-4 bg-black text-white w-16 text-center p-1">
               <input type="submit" value="Submit">

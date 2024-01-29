@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.project.domain.Journal;
 import com.project.persistence.repositories.UnitOfWork;
 import com.project.persistence.repositories.JournalRepository;
-import com.project.domain.User;
-import javax.servlet.http.HttpSession;
 
 @WebServlet("/journal")
 public class JournalServlet extends HttpServlet {
@@ -55,12 +53,11 @@ public class JournalServlet extends HttpServlet {
 
             System.out.println("title: " + title);
 
-            HttpSession session = req.getSession();
-            User user = (User) session.getAttribute("user");
-            int userId = user.id;
+            int userId = Integer.parseInt(req.getParameter("userId"));
             Journal journal = new Journal(title, content, userId);
             journalRepository.saveJournal(journal);
-            resp.sendRedirect("/journal?id=" + journal.id);
+            // resp.sendRedirect("/journal?id=" + journal.id);
+            resp.sendRedirect("journals.jsp");
         } catch (Exception e) {
             throw new ServletException("Error processing POST request", e);
         }
@@ -69,12 +66,11 @@ public class JournalServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            
             int id = Integer.parseInt(req.getParameter("id"));
             String title = req.getParameter("title");
             String content = req.getParameter("content");
-            HttpSession session = req.getSession();
-            User user = (User) session.getAttribute("user");
-            int userId = user.id;
+            int userId = Integer.parseInt(req.getParameter("userId"));
             Journal journal = new Journal(id, title, content, userId);
             journalRepository.updateJournal(journal);
             resp.sendRedirect("/journal?id=" + journal.id);
@@ -89,6 +85,7 @@ public class JournalServlet extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("id"));
             journalRepository.deleteJournal(id);
             resp.sendRedirect("/journals");
+
         } catch (Exception e) {
             throw new ServletException("Error processing DELETE request", e);
         }

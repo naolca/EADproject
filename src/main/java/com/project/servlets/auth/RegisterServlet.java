@@ -54,7 +54,7 @@ public class RegisterServlet extends HttpServlet {
         session.setAttribute("email", savedUser.email);
         session.setAttribute("role", savedUser.role);
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/user/home");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/user/journals");
         dispatcher.forward(req, res);
       }
     } catch (SQLException e) {
