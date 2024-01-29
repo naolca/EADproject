@@ -15,8 +15,9 @@
         <jsp:include page="./components/sidebar.jsp" />
       </div>
       <div class="w-4/5 gap-5 p-5">
-        <div class="w-full flex flex-col justify-center items-center">
-          <p class="font-bold text-gray-600">Please fill in the information of the new user!</p>
+        <jsp:include page="./components/header.jsp" />
+        <div class="w-full flex flex-col py-3 justify-center">
+          <p class="font-bold text-gray-600 text-xl">Please fill in the information of the new user!</p>
         </div>
         <div class="w-full flex flex-col justify-center items-center">
           <form action="/admin/add-user" method="POST" class="w-full">

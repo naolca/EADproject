@@ -47,7 +47,15 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.setAttribute("user", user);
 
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/user/profile.jsp");
+        RequestDispatcher dispatcher;
+        if (user.role.equals("ADMIN_USER")) {
+          res.sendRedirect("/admin");
+        } else {
+          res.sendRedirect("/journals");
+        }
+      } else {
+        req.setAttribute("error", "Email or Password is wrong.");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/auth/login.jsp");
         dispatcher.forward(req, res);
       }
     } catch (SQLException e) {
