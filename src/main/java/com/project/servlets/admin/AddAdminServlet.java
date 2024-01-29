@@ -47,7 +47,7 @@ public class AddAdminServlet extends HttpServlet {
 
       // Add the new user to the repository
       userRepository.saveUser(newUser);
-      res.sendRedirect("/admin");
+      res.sendRedirect("/admin/admins");
     } catch (SQLException e) {
       req.setAttribute("error", "Some error occured. Try again.");
       RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/add-admin.jsp");

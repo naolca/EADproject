@@ -20,7 +20,7 @@
       <div class="grid grid-cols-3 gap-5">
 
         <a href="/admin/users"
-          class="flex flex-col items-left p-5 text-gray-900 rounded-lg dark:text-white bg-indigo-600 hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          class="shadow-2xl flex flex-col items-left p-5 text-gray-900 rounded-2xl dark:text-white bg-indigo-600 hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg
             class="flex-shrink-0 w-10 h-10 text-gray-100 transition duration-75 dark:text-gray-100 group-hover:text-gray-900 dark:group-hover:text-white"
             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
@@ -30,7 +30,7 @@
           <span class="flex-1 block text-2xl">Check Users</span>
         </a>
         <a href="/admin/admins"
-          class="flex flex-col items-left p-5 text-gray-900 rounded-lg dark:text-white bg-indigo-600 hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          class="shadow-2xl flex flex-col items-left p-5 text-gray-900 rounded-2xl dark:text-white bg-indigo-600 hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg
             class="flex-shrink-0 w-10 h-10 text-gray-100 transition duration-75 dark:text-gray-100 group-hover:text-gray-900 dark:group-hover:text-white"
             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
@@ -40,7 +40,7 @@
           <span class="flex-1 block text-2xl">Check Admins</span>
         </a>
         <a href="/admin/add-admin"
-          class="flex flex-col items-left p-5 text-gray-900 rounded-lg dark:text-white bg-indigo-600 hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          class="shadow-2xl flex flex-col items-left p-5 text-gray-900 rounded-2xl dark:text-white bg-indigo-600 hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg
             class="flex-shrink-0 w-10 h-10 text-gray-100 transition duration-75 dark:text-gray-100 group-hover:text-gray-900 dark:group-hover:text-white"
             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -53,7 +53,7 @@
           <span class="flex-1 block text-2xl">Add a new Admin</span>
         </a>
         <a href="/admin/add-user"
-          class="flex flex-col items-left p-5 text-gray-900 rounded-lg dark:text-white bg-indigo-600 hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          class="shadow-2xl flex flex-col items-left p-5 text-gray-900 rounded-2xl dark:text-white bg-indigo-600 hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <svg
             class="flex-shrink-0 w-10 h-10 text-gray-100 transition duration-75 dark:text-gray-100 group-hover:text-gray-900 dark:group-hover:text-white"
             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -66,6 +66,11 @@
           <span class="flex-1 block text-2xl">Add a new User</span>
         </a>
       </div>
+      <% String error=(String) request.getAttribute("error"); if (error !="" && error !=null) { %>
+        <p class="text-red-600 font-bold">
+          <%=error%>
+        </p>
+        <% } %>
     </div>
   </main>
 </body>

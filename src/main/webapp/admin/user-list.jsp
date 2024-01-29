@@ -73,6 +73,11 @@
                 class="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
                 new User</a>
             </div>
+            <% String error=(String) request.getAttribute("error"); if (error !="" && error !=null) { %>
+              <p class="text-red-600 font-bold text-2xl">
+                <%=error%>
+              </p>
+              <% } %>
           </div>
         </main>
       </body>

@@ -10,7 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.project.customexceptions.NotFoundException;
+import com.project.domain.User;
 import com.project.persistence.repositories.UnitOfWork;
 import com.project.persistence.repositories.UserRepository;
 
@@ -33,27 +36,40 @@ public class DeleteUserServlet extends HttpServlet {
       String requestURI = request.getRequestURI();
       String[] uriParts = requestURI.split("/");
 
-      if (uriParts.length >= 4) {
-        int userId = Integer.parseInt(uriParts[3]);
+      int userId = Integer.parseInt(uriParts[3]);
+      HttpSession session = request.getSession();
+      User user = (User) session.getAttribute("user");
 
-        userRepository.deleteUser(userId);
+      if (userId == user.id) {
+        request.setAttribute("error", "Sorry, but you cannot delete your own admin account.");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/admin-list.jsp");
+        dispatcher.forward(request, response);
 
-        response.sendRedirect("/admin");
-      } else {
+        return;
+      }
+
+      User deletedUser = userRepository.getUserById(userId);
+      if (deletedUser == null) {
         throw new NotFoundException("User was not found");
+      }
+
+      userRepository.deleteUser(userId);
+      if (deletedUser.role.equals("ADMIN_USER")) {
+        response.sendRedirect("/admin/admins");
+      } else {
+        response.sendRedirect("/admin/users");
       }
     } catch (SQLException e) {
       request.setAttribute("error", "Some error occured. Try again.");
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/add-admin.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/home.jsp");
       dispatcher.forward(request, response);
 
     } catch (NumberFormatException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
 
     } catch (NotFoundException e) {
       request.setAttribute("error", "User not found.");
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/add-admin.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/home.jsp");
       dispatcher.forward(request, response);
       e.printStackTrace();
     }
