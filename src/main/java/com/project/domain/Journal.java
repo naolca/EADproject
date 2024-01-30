@@ -9,6 +9,7 @@ public class Journal {
   public Journal(String title, String content, int userId) {
     this.title = title;
     this.content = content;
+    this.userId = userId;
   }
 
   public Journal(int id, String title, String content, int userId) {
