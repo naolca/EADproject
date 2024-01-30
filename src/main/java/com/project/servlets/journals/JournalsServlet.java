@@ -21,14 +21,14 @@ public class JournalsServlet extends HttpServlet {
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+
     // Retrieve data from the service
     HttpSession session = request.getSession();
     User user = (User) session.getAttribute("user");
-    List<Journal> journals = null;
-    int userId = user.id;
+    List<Journal> journals;
 
     try {
-      journals = JournalService.getAllJournalEntries(userId);
+      journals = JournalService.getAllJournalEntries(user.id);
     } catch (SQLException e) {
       throw new RuntimeException(e);
     } catch (ClassNotFoundException e) {
