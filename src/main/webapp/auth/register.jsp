@@ -9,8 +9,9 @@
 </head>
 
 <body class="w-full h-100vh text-gray-900">
+  <%@include file="./auth-header.jsp" %>
   <jsp:include page="../bg.jsp" />
-  <main class="w-full h-full lg:flex lg:flex-row">
+  <main class="relative w-full h-full lg:flex lg:flex-row z-10 p-20 w-[60%] mx-auto">
     <div class="w-full h-full flex flex-col">
       <div class="w-full flex flex-col justify-center items-center">
         <h2 class="text-4xl font-bold text-gray-900">Welcome!</h2>
