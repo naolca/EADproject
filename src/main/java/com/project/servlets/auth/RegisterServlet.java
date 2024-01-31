@@ -43,6 +43,14 @@ public class RegisterServlet extends HttpServlet {
       String lastName = req.getParameter("lastName");
       String email = req.getParameter("email");
       String password = req.getParameter("password");
+      String confirmPassword = req.getParameter("confirmPassword");
+
+      if (!password.equals(confirmPassword)) {
+        req.setAttribute("error", "Password and confirmation should be similar.");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/auth/register.jsp");
+        dispatcher.forward(req, res);
+        return;
+      }
 
       // Create a new User object
       User newUser = new User(firstName, lastName, email, password, "NORMAL_USER");
