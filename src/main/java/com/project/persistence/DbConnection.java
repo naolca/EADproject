@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class DbConnection {
   private final String databaseName = "projectdb";
-  private final String username = "new_username";
-  private final String password = "new_password";
+  private final String username = "mysql";
+  private final String password = "MySql!2345678";
   private final String connectionUrl = "jdbc:mysql://localhost:3306/";
   private final Connection conn;
 

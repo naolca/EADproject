@@ -82,6 +82,30 @@ public class JournalRepository {
     return journals;
   }
 
+  public List<Journal> searchJournalsByUserId(int userId, String searchKey) throws SQLException {
+    List<Journal> journals = new ArrayList<>();
+
+    String query = "SELECT * FROM journals WHERE userId = ? AND title LIKE ? OR content LIKE ?";
+    PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+    // Set parameters for the prepared statement
+    preparedStatement.setInt(1, userId);
+    preparedStatement.setString(2, "%" + searchKey + "%");
+    preparedStatement.setString(3, "%" + searchKey + "%");
+
+    ResultSet resultSet = preparedStatement.executeQuery();
+
+    while (resultSet.next()) {
+      journals.add(new Journal(
+          resultSet.getInt("id"),
+          resultSet.getString("title"),
+          resultSet.getString("content"),
+          resultSet.getInt("userId")));
+    }
+
+    return journals;
+  }
+
   public void updateJournal(Journal journal) {
     String query = "UPDATE journals SET title = ?, content = ?, userId = ? WHERE id = ?";
 

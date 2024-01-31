@@ -26,7 +26,7 @@
                       them or create a new one!</p>
                   </div>
                   <div class="w-full flex gap-5">
-                    <form action="/admin/users" method="get" class="flex gap-5 w-full">
+                    <form action="/journals" method="get" class="flex gap-5 w-full">
                       <input type="text" name="searchKey" id="searchKey"
                         class="w-full font-bold rounded-xl px-3 py-2 text-lg relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/20 hover:ring-gray-900/30 focus:ring-gray-900/40 outline-none"
                         placeholder="Search journals..." />

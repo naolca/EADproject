@@ -14,11 +14,11 @@ import javax.servlet.http.HttpSession;
 
 import com.project.domain.Journal;
 import com.project.domain.User;
-import com.project.persistence.repositories.UnitOfWork;
 import com.project.persistence.repositories.JournalRepository;
+import com.project.persistence.repositories.UnitOfWork;
 
-@WebServlet("/journals/*")
-public class JournalDetailServlet extends HttpServlet {
+@WebServlet("/journals/edit-journal/*")
+public class EditJournalServlet extends HttpServlet {
   private JournalRepository journalRepository;
 
   public void init(final ServletConfig config) {
@@ -36,7 +36,7 @@ public class JournalDetailServlet extends HttpServlet {
       String requestURI = request.getRequestURI();
       String[] uriParts = requestURI.split("/");
 
-      int journalId = Integer.parseInt(uriParts[2]);
+      int journalId = Integer.parseInt(uriParts[3]);
       HttpSession session = request.getSession();
       User user = (User) session.getAttribute("user");
 
@@ -51,46 +51,28 @@ public class JournalDetailServlet extends HttpServlet {
       }
 
       request.setAttribute("journal", journal);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/user/journal-detail.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/user/edit-journal.jsp");
       dispatcher.forward(request, response);
     } catch (NumberFormatException e) {
       e.printStackTrace();
     }
   }
 
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    try {
-      String requestURI = request.getRequestURI();
-      String[] uriParts = requestURI.split("/");
+  public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    // Retrieve data from the form
+    String requestURI = req.getRequestURI();
+    String[] uriParts = requestURI.split("/");
 
-      int journalId = Integer.parseInt(uriParts[2]);
-      HttpSession session = request.getSession();
-      User user = (User) session.getAttribute("user");
-      System.out.println(user.firstName);
+    int journalId = Integer.parseInt(uriParts[3]);
+    HttpSession session = (HttpSession) req.getSession();
+    User user = (User) session.getAttribute("user");
 
-      Journal journal = journalRepository.getJournalById(journalId);
+    String title = req.getParameter("title");
+    String content = req.getParameter("content");
 
-      if (journal == null) {
-        request.setAttribute("error", "Sorry, couldn't get the journal you requested.");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/user/journals.jsp");
-        dispatcher.forward(request, response);
+    Journal journal = new Journal(journalId, title, content, user.id);
 
-        return;
-      }
-
-      if (journal.userId != user.id) {
-        request.setAttribute("error", "Sorry, couldn't delete another person's journal.");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/user/journals.jsp");
-        dispatcher.forward(request, response);
-
-        return;
-      }
-
-      System.out.println("Deleting");
-      journalRepository.deleteJournal(journalId);
-      response.sendRedirect("/journals");
-    } catch (NumberFormatException e) {
-      e.printStackTrace();
-    }
+    journalRepository.updateJournal(journal);
+    res.sendRedirect("/journals/" + journal.id);
   }
 }

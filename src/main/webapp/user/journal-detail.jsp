@@ -29,12 +29,13 @@
                     <p class="font-medium text-gray-800 mt-4 text-lg">Date Created: January 24, 2024</p>
 
                     <div class="mt-4 flex gap-4">
-                      <a href="<%= request.getContextPath() %>/edit-journal?id=<%=journal.id%>"
+                      <a href=<%="/journals/edit-journal/" + journal.id%>
                         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Edit</a>
-                      <form action=<%="/journals/" + journal.id%> method="DELETE">
+                      <form action=<%="/journals/" + journal.id%> method="post">
                         <button type="submit"
                           class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Delete</a>
                       </form>
+
                     </div>
                   </div>
                   <div class="mt-4">

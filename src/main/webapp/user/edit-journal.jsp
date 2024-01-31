@@ -1,65 +1,40 @@
 <%@ page import="com.project.domain.Journal" %>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  <%@ page import="com.project.services.JournalService" %>
+    <%@ page import="com.project.persistence.repositories.JournalRepository" %>
+      <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<body>
-<%@include file="./header.jsp" %>
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <script src="https://cdn.tailwindcss.com"></script>
+        </head>
 
-<% Journal journal = (Journal) request.getAttribute("journal"); %>
-<div class="flex flex-col w-full justify-between h-screen">
-    <jsp:include page="header.jsp" />
-    <div class="flex justify-between  gap-x-4">
-        <div class="flex flex-col justify-between gap-y-18 flex-1 ">
-            <h1>Edit your journal</h1>
-            <form onsubmit()=>{editJournal(<%= journal.id %>)}
-                <div class="border-l-2 border-l-black">
-                    <input
-                            class="flex  p-2 m-2 text-2xl focus:border-none"
-                            type="text"
-                            name="title"
-                            placeholder="Enter the title of the Journal"
-                            defaultValue=<%= journal.title %>
-                    />
+        <body>
+          <div class="flex flex-col w-full justify-between h-screen bg-blue-50">
+            <jsp:include page="header.jsp" />
+            <% Journal journal=(Journal) request.getAttribute("journal"); %>
+
+              <div class="flex justify-between min-h-screen items-center  min-w-screen mx-16  gap-x-4">
+                <div class="flex flex-col justify-between gap-y-18 flex-1 ">
+                  <form action=<%="/journals/edit-journal/" + journal.id%> method="post">
+                    <div class="border-l-2 border-l-black">
+                      <input class="flex  p-2 m-2 text-2xl focus:border-none" type="text" name="title"
+                        placeholder="Enter the title of the Journal" value=<%=journal.title%> />
+                    </div>
+
+                    <div class="border-l-2 border-l-black h-64 p-2">
+                      <textarea class="flex p-2 m-2 text-2xl focus:border-none h-full w-full" name="content"
+                        placeholder="Journal content..">
+                        <%=journal.content%>
+                      </textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-x-4 bg-black text-white w-16 text-center p-1 m-2">
+                      <input type="submit" value="Submit">
+                    </div>
+                  </form>
                 </div>
-
-                <div class="border-l-2 border-l-black h-64 p-2">
-                    <textarea
-                            class="flex p-2 m-2 text-2xl focus:border-none h-full w-full"
-                            name="content"
-                            placeholder="Journal content.."></textarea>
-                            defaultValue=<%= journal.content %>
-                </div>
-
-                <div class="flex justify-center gap-x-4 bg-black text-white w-16 text-center p-1">
-                    <input  type="submit" value="Submit">
-                </div>
-            </form>
-        </div>
-    </div>
-    <script>
-        function editJournal(id) {
-            const title = document.querySelector("input[name='title']").value;
-            const content = document.querySelector("textarea[name='content']").value;
-            const data = {
-                title,
-                content
-            }
-            fetch(`http://localhost:8080/journal/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(err => console.log(err));
-        }
-    <jsp:include page="footer.jsp" />
-</div>
-</body>
+              </div>
+              <jsp:include page="footer.jsp" />
+          </div>
+        </body>
